@@ -1,0 +1,28 @@
+VERSION 0.7
+FROM golang:1.19.5-alpine3.17
+WORKDIR /go-server
+
+deps:
+  COPY go.mod go.sum ./
+  RUN go mod download
+  SAVE ARTIFACT go.mod 
+  SAVE ARTIFACT go.sum 
+
+test:
+  FROM +deps 
+  COPY main.go quotes.go quotes_test.go quotes.txt .
+  RUN go test -v -vet=off
+
+build:
+  FROM +deps
+  COPY main.go quotes.go .
+  RUN go build -o build/go-server .
+  SAVE ARTIFACT build/go-server go-server 
+
+docker:
+  ARG --required tag
+  COPY +build/go-server . 
+  COPY ../quote_generator+artifact/quotes.txt quotes.txt
+  EXPOSE 8001
+  ENTRYPOINT ["./go-server"]
+  SAVE IMAGE --push ezeev/earthly-go-example:$tag
