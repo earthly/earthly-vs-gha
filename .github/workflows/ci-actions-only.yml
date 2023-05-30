@@ -31,19 +31,19 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: docker/build-push-action@v4
         with:
-          context: "{{defaultContect}}examples/polyglot-repo/go_server"
+          context: "/go_server"
           push: true
           tags: ezeev/earthly-go-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - name: Go Service Build
-        working-directory: examples/polyglot-repo/go_server
+        working-directory: go_server
         run: |
           go mod download
           go build -o go-server
           ls
       - name: Go Service Test
-        working-directory: examples/polyglot-repo/go_server
+        working-directory: go_server
         run: go test -v -vet=off
   rust_service_build:
     environment: "Actions Demo"
