@@ -1,7 +1,7 @@
 
 VERSION 0.7
 
-PROJECT earthly-sa/earthly-demo
+PROJECT earthly-sa/earthly-vs-gha
 
 main-pipeline:
   PIPELINE --push 
