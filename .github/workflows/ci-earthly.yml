@@ -31,6 +31,10 @@ jobs:
             branch="${GITHUB_REF##*/}"
           fi
           git checkout -b "$branch" || true
+      - uses: actions/cache@v2
+        with:
+          path: /var/lib/docker/volumes/earthly-cache 
+          key: ${{ runner.os }}-earthly-${{ hashFiles('**/Earthfile') }}
       - name: Docker Login
         run: docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
       - name: Earthly version
