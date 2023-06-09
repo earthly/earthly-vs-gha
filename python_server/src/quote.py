@@ -28,6 +28,7 @@ def random_quote():
 
 # flask --app src/quote run --host=0.0.0.0 --port=8002
 # prod: gunicorn -w 4 'quote:app' -b 0.0.0.0:8002 --chdir src 
+# bump
 @app.route("/")
 def quote():
     return random_quote() 
