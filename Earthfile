@@ -45,6 +45,5 @@ dev-down:
   LOCALLY
   RUN docker-compose down
 # TODO - Add WITH DOCKER integration tests here
-# bump
 
 
