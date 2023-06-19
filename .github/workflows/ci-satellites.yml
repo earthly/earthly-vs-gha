@@ -9,12 +9,13 @@ on:
       - "main"
 jobs:
   satellites-build:
-    environment: "Actions Demo"
+    # environment: "Actions Demo"
     runs-on: ubuntu-latest
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
+      SATELLITE_NAME: ${{ secrets.SATELLITE_NAME }}
       FORCE_COLOR: 1
       EARTHLY_LOGSTREAM_UPLOAD: true
     steps:
@@ -36,4 +37,4 @@ jobs:
       - name: Earthly version
         run: earthly --version
       - name: Run CI pipeline
-        run: "earthly --ci --sat evan1 --org earthly-sa --push +main-pipeline --tag=gh-sat-demo"
+        run: "earthly --ci --sat $SATELLITE_NAME --org earthly-sa --push +main-pipeline --tag=gh-sat-demo"
