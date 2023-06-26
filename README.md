@@ -7,11 +7,11 @@ This is a repository for Earthly's article on Github Actions and Earthly.
 
 ### Prequisites
 
-- Earthly - if Earthly is not installed, [get Earthly](https://earthly.dev/get-earthly) 
+- Earthly - if Earthly is not installed, [get Earthly](https://earthly.dev/get-earthly).
 
 ### Running the build
 
-After cloning this repository, run:
+After cloning this repository, navigate to the root directory and run:
 
 ```
 earthly +main-pipeline --tag=local
@@ -29,10 +29,14 @@ earthly +dev-up --tag=local
 
 Then, open http://localhost:3001 in your browser.
 
+### Stop the app locally
+
+Hit `ctrl+c` in your terminal or alternatively, run `earthly +dev-down`.
+
 
 # Running on Github Actions
 
-There are 2 Github Actions workflows provided in the `.github/workflows` directory.
+There are 2 Github Actions workflows provided in the `.github/workflows` directory. 
 
 - `ci-actions-only.yml` - This workflow runs the build on Github Actions *only* using Docker and a combination of GHA plugins.
 - `ci-satellites.yml` - This workflow runs the build on an Earthly Satellite (remote runner) via Github Actions.
@@ -45,7 +49,7 @@ In order for these workflows to work in your own repository, you will need to cr
 - `EARTHLY_ORG` - The name of your Earthly org where your satellite was created.
 - `SATELLITE_NAME` - The name of your Earthly satellite
 
-
+To get access to an Earthly Satellite, sign up for Earthly Free Tier at ...
 
 
 
