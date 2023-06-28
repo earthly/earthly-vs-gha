@@ -81,7 +81,7 @@ jobs:
       - uses: actions-rs/cargo@v1
       - name: Rust Service Test
         working-directory: rust_server
-        run: cargo test
+        run: "cargo test"
   python_service_build:
     environment: "Actions Demo"
     runs-on: ubuntu-latest
