@@ -1,10 +1,14 @@
 VERSION 0.7
+
+PROJECT earthly-sa/earthly-vs-gha
+
 FROM ubuntu:23.10
 WORKDIR /deploy
+# RUN --secret MY_KEY=my_key echo $MY_KEY
 
 
-
-ENV FLY_API_TOKEN
+# earthly secret --org earthly-sa  --project earthly-vs-gha set fly_api_token YOUR_FLY_API_TOKEN
+RUN --secret FLY_API_TOKEN=fly_api_token
 
 deps:
     RUN apt update

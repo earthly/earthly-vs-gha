@@ -16,7 +16,7 @@ jobs:
       EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
       EARTHLY_ORG: ${{ secrets.EARTHLY_ORG }}
       SATELLITE_NAME: ${{ secrets.SATELLITE_NAME }}
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      # FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FORCE_COLOR: 1
       EARTHLY_LOGSTREAM_UPLOAD: true
     steps:
