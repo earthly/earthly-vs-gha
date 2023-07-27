@@ -10,7 +10,7 @@ WORKDIR /deploy
 
 RUN --secret TEST_SECRET=test_secret echo $TEST_SECRET
 # earthly secret --org earthly-sa  --project earthly-vs-gha set fly_api_token YOUR_FLY_API_TOKEN
-RUN --secret FLY_API_TOKEN=fly_api_token
+ENV --secret FLY_API_TOKEN=fly_api_token
 
 deps:
     RUN apt update
