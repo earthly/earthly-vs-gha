@@ -4,7 +4,7 @@ WORKDIR /deploy
 
 
 
-ENV FLY_API_TOKEN=REPLACE_WITH_YOUR_TOKEN
+ENV FLY_API_TOKEN
 
 deps:
     RUN apt update
