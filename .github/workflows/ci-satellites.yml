@@ -16,6 +16,7 @@ jobs:
       EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
       EARTHLY_ORG: ${{ secrets.EARTHLY_ORG }}
       SATELLITE_NAME: ${{ secrets.SATELLITE_NAME }}
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       FORCE_COLOR: 1
       EARTHLY_LOGSTREAM_UPLOAD: true
     steps:
@@ -37,4 +38,4 @@ jobs:
       - name: Earthly version
         run: earthly --version
       - name: Run CI pipeline
-        run: "earthly --ci --sat $SATELLITE_NAME --org $EARTHLY_ORG --push +main-pipeline --tag=gh-sat-demo"
+        run: "earthly --ci --sat $SATELLITE_NAME --org $EARTHLY_ORG --push +main"

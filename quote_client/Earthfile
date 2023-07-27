@@ -15,11 +15,14 @@ test:
 
 build:
   FROM +deps
-  ARG --required base_url   
-  RUN VITE_RUST_SERVER=$base_url:8000 \
-    VITE_GO_SERVER=$base_url:8001 \
-    VITE_PYTHON_SERVER=$base_url:8002 \
-    VITE_NODE_SERVER=$base_url:8003 \
+  ARG --required go_server_url 
+  ARG --required rust_server_url 
+  ARG --required python_server_url 
+  ARG --required node_server_url 
+  RUN VITE_RUST_SERVER=$rust_server_url \
+    VITE_GO_SERVER=$go_server_url \
+    VITE_PYTHON_SERVER=$python_server_url \
+    VITE_NODE_SERVER=$node_server_url \
     yarn build
   SAVE ARTIFACT dist/ 
 
