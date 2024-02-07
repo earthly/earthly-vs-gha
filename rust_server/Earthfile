@@ -1,7 +1,7 @@
 VERSION 0.8
 PROJECT earthly-sa/earthly-vs-gha
 
-IMPORT github.com/earthly/lib/rust:b68c32ad8d180614df3f6472268ca9741ffec4a6 AS rust
+IMPORT github.com/earthly/lib/rust AS rust
 FROM rust:1.73.0-bookworm
 
 install:

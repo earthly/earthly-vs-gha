@@ -5,6 +5,11 @@ PROJECT earthly-sa/earthly-vs-gha
 FROM ubuntu:23.10
 WORKDIR /deploy
 
+deps:
+    RUN apt update
+    RUN apt install -y curl git
+    RUN curl -L https://fly.io/install.sh | sh
+
 deploy:
     FROM +deps
     ARG --required image
