@@ -1,4 +1,6 @@
-VERSION 0.7
+VERSION 0.8
+PROJECT earthly-sa/earthly-vs-gha
+
 FROM node:19-alpine3.16
 WORKDIR /node-server
 
@@ -17,8 +19,15 @@ test:
   RUN npm test
 
 docker:
-  ARG --required tag
+  ARG tag=latest
   FROM +build 
-  EXPOSE 8003 
+  EXPOSE 80
   ENTRYPOINT ["node", "src/index.js"]
-  SAVE IMAGE --push ezeev/earthly-node-example:$tag
+  SAVE IMAGE --push idelvall/earthly-demo-node:$tag
+
+deploy:
+  ARG tag=latest
+  BUILD ../infra+deploy --image=idelvall/earthly-demo-node --tag=$tag --port=80
+  RUN echo "https://earthly-demo-node.fly.dev">service
+  SAVE ARTIFACT service service
+

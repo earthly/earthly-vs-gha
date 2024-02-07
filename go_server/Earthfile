@@ -1,4 +1,6 @@
-VERSION 0.7
+VERSION 0.8
+PROJECT earthly-sa/earthly-vs-gha
+
 FROM golang:1.19.5-alpine3.17
 WORKDIR /go-server
 
@@ -17,12 +19,18 @@ build:
   FROM +deps
   COPY main.go quotes.go .
   RUN go build -o build/go-server .
-  SAVE ARTIFACT build/go-server go-server 
+  SAVE ARTIFACT build/go-server go-server
 
 docker:
-  ARG --required tag
+  ARG tag=latest
   COPY +build/go-server . 
   COPY ../quote_generator+artifact/quotes.txt quotes.txt
-  EXPOSE 8001
+  EXPOSE 80
   ENTRYPOINT ["./go-server"]
-  SAVE IMAGE --push ezeev/earthly-go-example:$tag
+  SAVE IMAGE --push idelvall/earthly-demo-go:$tag
+
+deploy:
+  ARG tag=latest
+  BUILD ../infra+deploy --image=idelvall/earthly-demo-go --tag=$tag --port=80
+  RUN echo "https://earthly-demo-go.fly.dev/">service
+  SAVE ARTIFACT service service

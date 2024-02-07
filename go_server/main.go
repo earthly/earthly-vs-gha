@@ -23,9 +23,9 @@ func main() {
 		logrus.Info(quote)
 		fmt.Fprint(w, quote)
 
-    // fmt.Fprint(w, "Hello from Earthly - 12:27PM")
+		// fmt.Fprint(w, "Hello from Earthly - 12:27PM")
 
 	})
 
-	http.ListenAndServe(":8001", nil)
+	http.ListenAndServe(":80", nil)
 }

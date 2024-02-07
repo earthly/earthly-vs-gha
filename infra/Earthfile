@@ -1,0 +1,16 @@
+VERSION 0.8
+
+PROJECT earthly-sa/earthly-vs-gha
+
+FROM ubuntu:23.10
+WORKDIR /deploy
+
+deploy:
+    FROM +deps
+    ARG --required image
+    ARG --required tag
+    ARG --required port
+    LET name=$(basename $image)
+    RUN --no-cache --secret FLY_API_TOKEN=fly_api_token if /root/.fly/bin/flyctl apps destroy -y $name | grep "Could not find"; then echo "App not found"; else echo "App found, recreating"; fi
+    RUN --no-cache --secret FLY_API_TOKEN=fly_api_token /root/.fly/bin/flyctl launch --image $image:$tag --internal-port $port --name $name --org earthly --region lax
+    RUN --no-cache --secret FLY_API_TOKEN=fly_api_token /root/.fly/bin/flyctl deploy

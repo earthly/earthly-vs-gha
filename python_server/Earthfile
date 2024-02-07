@@ -1,4 +1,6 @@
-VERSION 0.7
+VERSION 0.8
+PROJECT earthly-sa/earthly-vs-gha
+
 FROM python:3 
 WORKDIR /py 
 
@@ -29,7 +31,7 @@ test:
 
 
 docker:
-  ARG --required tag
+  ARG tag=latest
   COPY +build/src src 
   COPY +build/wheels wheels 
   # quotes.txt needs to go into src for gunicorn to pick it up
@@ -37,7 +39,12 @@ docker:
   COPY start.sh ./
   COPY requirements.txt ./
   RUN pip install --no-index --find-links=wheels -r requirements.txt 
-  EXPOSE 8002
+  EXPOSE 80
   ENTRYPOINT ["./start.sh" ]
-  SAVE IMAGE --push ezeev/earthly-python-example:$tag
+  SAVE IMAGE --push idelvall/earthly-demo-python:$tag
 
+deploy:
+  ARG tag=latest
+  BUILD ../infra+deploy --image=idelvall/earthly-demo-python --tag=$tag --port=80
+  RUN echo "https://earthly-demo-python.fly.dev">service
+  SAVE ARTIFACT service service

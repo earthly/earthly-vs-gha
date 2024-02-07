@@ -26,8 +26,8 @@ def quotes():
 def random_quote():
     return random.choice(quotes())
 
-# flask --app src/quote run --host=0.0.0.0 --port=8002
-# prod: gunicorn -w 4 'quote:app' -b 0.0.0.0:8002 --chdir src 
+# flask --app src/quote run --host=0.0.0.0 --port=80
+# prod: gunicorn -w 4 'quote:app' -b 0.0.0.0:80 --chdir src
 # bump
 @app.route("/")
 def quote():

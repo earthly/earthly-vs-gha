@@ -32,7 +32,7 @@ jobs:
         with:
           context: "go_server"
           push: true
-          tags: ezeev/earthly-go-example:gh-actions-only
+          tags: idelvall/earthly-go-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - name: Go Service Build
@@ -64,7 +64,7 @@ jobs:
         with:
           context: "rust_server"
           push: true
-          tags: ezeev/earthly-rust-example:gh-actions-only
+          tags: idelvall/earthly-rust-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - uses: actions/cache@v2
@@ -101,7 +101,7 @@ jobs:
         with:
           context: "python_server"
           push: true
-          tags: ezeev/earthly-python-example:gh-actions-only
+          tags: idelvall/earthly-python-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - uses: actions/checkout@v3
@@ -138,7 +138,7 @@ jobs:
         with:
           context: "node_server"
           push: true
-          tags: ezeev/earthly-node-example:gh-actions-only
+          tags: idelvall/earthly-node-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - uses: actions/cache@v2
@@ -171,7 +171,7 @@ jobs:
         with:
           context: "quote_client"
           push: true
-          tags: ezeev/earthly-react-example:gh-actions-only
+          tags: idelvall/earthly-react-example:gh-actions-only
           cache-from: type=gha
           cache-to: type=gha
       - uses: actions/cache@v2

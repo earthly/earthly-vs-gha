@@ -1,31 +1,39 @@
-VERSION 0.7
-FROM  rust:1.71
-WORKDIR /rust-server
+VERSION 0.8
+PROJECT earthly-sa/earthly-vs-gha
 
+IMPORT github.com/earthly/lib/rust:b68c32ad8d180614df3f6472268ca9741ffec4a6 AS rust
+FROM rust:1.73.0-bookworm
 
-deps:
-  COPY Cargo.lock Cargo.toml Rocket.toml quotes.txt .
-  RUN mkdir src
-  RUN touch src/main.rs # adding main.rs stub so cargo fetch works to prepare the cache
-  RUN cargo fetch 
+install:
+  WORKDIR /rust-server
+  DO rust+INIT
+
+source:
+  FROM +install
+  COPY --keep-ts Cargo.toml Cargo.lock Rocket.toml quotes.txt .
+  COPY --keep-ts --dir src .
 
 test:
-  FROM +deps
-  RUN cargo test
+  FROM +source
+  DO rust+CARGO --args="test"
 
 build:
-  FROM +deps
-  COPY --dir src .
-  RUN cargo build --bin quote_server
-  SAVE ARTIFACT target/debug/quote_server quote_server
+  FROM +source
+  DO rust+CARGO --args="build --release --bin quote_server" --output="release/[^/\.]+"
+  SAVE ARTIFACT target/release/quote_server quote_server AS LOCAL artifact/target
 
 docker:
-  ARG --required tag
-  FROM debian:buster-slim
+  ARG tag=latest
   COPY +build/quote_server quote_server
   # We also have to copy Rocket.toml so that Rocket binds to the correct address and port within the container.
   COPY Rocket.toml Rocket.toml
   COPY ../quote_generator+artifact/quotes.txt quotes.txt
-  EXPOSE 8000
+  EXPOSE 80
   ENTRYPOINT ["./quote_server"]
-  SAVE IMAGE --push ezeev/earthly-rust-example:$tag
+  SAVE IMAGE --push idelvall/earthly-demo-rs:$tag
+
+deploy:
+  ARG tag=latest
+  BUILD ../infra+deploy --image=idelvall/earthly-demo-rust --tag=$tag --port=80
+  RUN echo "https://earthly-demo-rust.fly.dev">service
+  SAVE ARTIFACT service service
